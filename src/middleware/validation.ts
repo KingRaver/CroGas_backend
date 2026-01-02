@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { z } from 'zod';
-import { FaucetRequest, X402Request } from '../types/index';
+import { FaucetRequest, X402Request } from '../types/index.js';
 
 const ethereumAddressRegex = /^0x[a-fA-F0-9]{40}$/;
 

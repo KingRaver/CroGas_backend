@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import faucetRouter from './routes/faucet';
-import x402Router from './routes/x402';
-import { logger } from './utils/logger';
-import { validateFaucet, validateX402 } from './middleware/validation';
-import { createFaucetLimiter } from './middleware/rateLimit';
+import faucetRouter from './routes/faucet.js';
+import x402Router from './routes/x402.js';
+import { logger } from './utils/logger.js';
+import { validateFaucet, validateX402 } from './middleware/validation.js';
+import { createFaucetLimiter } from './middleware/rateLimit.js';
 
 const app = express();
 

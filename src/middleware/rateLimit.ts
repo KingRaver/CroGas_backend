@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import Redis from 'rate-limiter-flexible'; // Note: needs redis client
-import { logger } from '../utils/logger';
-import { RATE_LIMIT_WINDOW } from '../utils/env';
+import { logger } from '../utils/logger.js';
+import { RATE_LIMIT_WINDOW } from '../utils/env.js';
 
 let redisStore: any; // Initialize in index.ts
 

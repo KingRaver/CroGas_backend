@@ -1,9 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { encodeFunctionData } from 'viem';
-import { publicClient, walletClient, USDC_ADDRESS, USDC_ABI } from '../config/viem';
-import { logger } from '../utils/logger';
-import { FaucetResponse } from '../types/index';
+import { publicClient, walletClient, USDC_ADDRESS, USDC_ABI } from '../config/viem.js';
+import { logger } from '../utils/logger.js';
+import { FaucetResponse } from '../types/index.js';
 
 const router = Router();
 const DRIP_AMOUNT_USD = 10; // 10 USDC per drip (6 decimals)
