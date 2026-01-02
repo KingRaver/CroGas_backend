@@ -32,7 +32,7 @@ graph TB
 
 ```bash
 # Clone & Deploy
-git clone https://github.com/YOUR_ORG/CroGas_backend
+git clone https://github.com/KingRaver/CroGas_backend
 cd CroGas_backend
 npm install
 
@@ -128,9 +128,9 @@ Standards:  EIP-712, EIP-3009, HTTP 402
 ## 🙌 Community & Support
 
 - 💬 [Discord](https://discord.gg/crogas)
-- 🐛 [Issues](https://github.com/YOUR_ORG/CroGas_backend/issues)
+- 🐛 [Issues](https://github.com/KingRaver/CroGas_backend/issues)
 - 📖 [API Docs](https://your-app.vercel.app/api/health)
-- 🚀 [Frontend](https://github.com/YOUR_ORG/CroGas)
+- 🚀 [Frontend](https://cro-gas.vercel.app/)
 
 ## ⚖️ License
 MIT - Use freely, build empires.
