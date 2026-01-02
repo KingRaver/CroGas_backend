@@ -1,15 +1,13 @@
 import { RequestHandler } from 'express';
-import Redis from 'rate-limiter-flexible'; // Note: needs redis client
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { logger } from '../utils/logger.js';
 import { RATE_LIMIT_WINDOW } from '../utils/env.js';
 
-let redisStore: any; // Initialize in index.ts
-
+// Using in-memory rate limiter (for production, consider Redis for multi-instance deployments)
 export const createFaucetLimiter = (): RequestHandler => {
-  const limiter = new Redis.RateLimiterRedis({
-    storeClient: redisStore,
-    points: 1,
-    duration: RATE_LIMIT_WINDOW,
+  const limiter = new RateLimiterMemory({
+    points: 1, // Number of requests
+    duration: RATE_LIMIT_WINDOW, // Per window in seconds
     keyPrefix: 'faucet'
   });
 

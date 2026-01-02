@@ -7,7 +7,9 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "lint": "eslint src --ext .ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate-keys": "node scripts/generate-keys.js",
+    "encrypt-key": "node scripts/encrypt-existing-key.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
