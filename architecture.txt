@@ -1,0 +1,22 @@
+crogas_backend/
+├── src/
+│   ├── index.ts
+│   ├── routes/
+│   │   ├── faucet.ts
+│   │   └── x402.ts
+│   ├── config/
+│   │   └── viem.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── middleware/
+│   │   ├── rateLimit.ts
+│   │   └── validation.ts
+│   └── utils/
+│       └── logger.ts
+├── .env.example
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── README.md
+├── architecture.txt
+└── vercel.json
