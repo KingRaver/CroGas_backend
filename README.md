@@ -1,11 +1,6 @@
 # CroGas Backend 🚀
 ## Enterprise-Grade Gas Abstraction Layer for Cronos AI Agents
 
-[
-[
-[
-[
-
 **Production-ready x402 Facilitator + USDC Faucet powering the next generation of autonomous AI agents on Cronos Testnet.**
 
 ## 🎯 One-Line Value Proposition
@@ -145,4 +140,5 @@ MIT - Use freely, build empires.
 **Built for the AI Agent Economy. Powered by Cronos x402. Deployed in 60 seconds.**
 
 *MMXXVI - The Year Gas Became Programmable*  
-[Deploy Now](https://vercel.com/new/clone?repository-url=https://github.com/0xShortx/CroGas_backend) 👆
+[Deploy Now][![Deploy to Railway](https://railway.app/button.svg)](https://railway.app/new?template=https://github.com/KingRaver/CroGas_backend)
+ 👆
