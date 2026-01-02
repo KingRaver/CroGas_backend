@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import Redis from 'rate-limiter-flexible'; // Note: needs redis client
-import { logger } from '../utils/logger.js';
+import { logger } from '../utils/logger';
+import { RATE_LIMIT_WINDOW } from '../utils/env';
 
 let redisStore: any; // Initialize in index.ts
 
@@ -16,7 +17,7 @@ export const createFaucetLimiter = (): RequestHandler => {
     try {
       await limiter.consume(req.body.address);
       next();
-    } catch (rejRes) {
+    } catch (rejRes: any) {
       logger.warn({ address: req.body.address, remaining: rejRes.remainingPoints }, 'Rate limited');
       res.status(429).json({ error: 'Too many requests' });
     }

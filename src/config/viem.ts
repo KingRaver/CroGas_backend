@@ -2,7 +2,7 @@ import { createPublicClient, http, createWalletClient } from 'viem';
 import { cronosTestnet } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import CryptoJS from 'crypto-js';
-import { RELAYER_PRIVATE_KEY, CRONOS_RPC_URL } from '../utils/env.js';
+import { RELAYER_PRIVATE_KEY, CRONOS_RPC_URL } from '../utils/env';
 
 const decryptKey = (encryptedKey: string, encryptionKey: string): `0x${string}` => {
   const decrypted = CryptoJS.AES.decrypt(encryptedKey, encryptionKey).toString(CryptoJS.enc.Utf8);
