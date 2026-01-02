@@ -5,7 +5,16 @@ import CryptoJS from 'crypto-js';
 import { RELAYER_PRIVATE_KEY, CRONOS_RPC_URL } from '../utils/env.js';
 
 const decryptKey = (encryptedKey: string, encryptionKey: string): `0x${string}` => {
+  if (!encryptionKey) {
+    throw new Error('ENCRYPTION_KEY environment variable is not set');
+  }
+  if (!encryptedKey) {
+    throw new Error('RELAYER_PRIVATE_KEY environment variable is not set');
+  }
   const decrypted = CryptoJS.AES.decrypt(encryptedKey, encryptionKey).toString(CryptoJS.enc.Utf8);
+  if (!decrypted) {
+    throw new Error('Failed to decrypt private key - check ENCRYPTION_KEY is correct');
+  }
   return decrypted as `0x${string}`;
 };
 
@@ -14,7 +23,16 @@ export const publicClient = createPublicClient({
   transport: http(CRONOS_RPC_URL),
 });
 
-export const relayerAccount = privateKeyToAccount(decryptKey(RELAYER_PRIVATE_KEY!, process.env.ENCRYPTION_KEY!));
+// Validate environment variables before attempting decryption
+const encryptionKey = process.env.ENCRYPTION_KEY;
+if (!RELAYER_PRIVATE_KEY) {
+  throw new Error('RELAYER_PRIVATE_KEY environment variable is required');
+}
+if (!encryptionKey) {
+  throw new Error('ENCRYPTION_KEY environment variable is required');
+}
+
+export const relayerAccount = privateKeyToAccount(decryptKey(RELAYER_PRIVATE_KEY, encryptionKey));
 export const walletClient = createWalletClient({
   chain: cronosTestnet,
   transport: http(CRONOS_RPC_URL),
