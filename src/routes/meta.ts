@@ -91,6 +91,64 @@ const PRICING = {
   fast: { multiplier: 1.5, emoji: '🚀', label: 'Prioritaire', estimatedTime: '~3s' }
 };
 
+// ============================================================
+// Transaction History Storage
+// NOTE: In production, replace with a proper database (PostgreSQL, MongoDB, etc.)
+// This in-memory store will reset on server restart
+// ============================================================
+
+interface StoredTransaction {
+  txHash: string;
+  from: string;
+  to: string;
+  value: string;
+  gasUsed: string;
+  priceUSDC: string;
+  priority: string;
+  timestamp: number;
+}
+
+// In-memory store: address -> transactions[]
+const transactionHistory: Map<string, StoredTransaction[]> = new Map();
+
+const MAX_HISTORY_PER_ADDRESS = 50; // Keep last 50 per address
+
+function storeTransaction(from: string, tx: StoredTransaction) {
+  const address = from.toLowerCase();
+  const history = transactionHistory.get(address) || [];
+  
+  // Add to beginning (newest first)
+  history.unshift(tx);
+  
+  // Trim to max
+  if (history.length > MAX_HISTORY_PER_ADDRESS) {
+    history.length = MAX_HISTORY_PER_ADDRESS;
+  }
+  
+  transactionHistory.set(address, history);
+  logger.info({ address, txHash: tx.txHash }, 'Transaction stored in history');
+}
+
+// GET /meta/history/:address
+router.get('/history/:address', async (req: Request, res: Response) => {
+  try {
+    const address = getAddress(req.params.address).toLowerCase();
+    const limit = Math.min(parseInt(req.query.limit as string) || 10, 50);
+    
+    const history = transactionHistory.get(address) || [];
+    const limited = history.slice(0, limit);
+    
+    logger.info({ address, count: limited.length }, 'History fetched');
+    res.json({ 
+      transactions: limited,
+      total: history.length
+    });
+  } catch (error: any) {
+    logger.error({ address: req.params.address, error: error.message }, 'History fetch failed');
+    res.status(500).json({ error: 'Failed to fetch history', details: error.message });
+  }
+});
+
 // GET /meta/nonce/:address
 router.get('/nonce/:address', async (req: Request, res: Response) => {
   try {
@@ -190,6 +248,18 @@ router.post('/relay', async (req: Request, res: Response) => {
       gas: (gasEstimate * 120n) / 100n, // 20% buffer
       maxFeePerGas: adjustedGasPrice,
       maxPriorityFeePerGas: adjustedGasPrice / 10n
+    });
+
+    // Store transaction in history
+    storeTransaction(request.from, {
+      txHash,
+      from: request.from,
+      to: request.to,
+      value: request.value || '0',
+      gasUsed: gasEstimate.toString(),
+      priceUSDC: gasCostUSDC,
+      priority,
+      timestamp: Date.now()
     });
 
     logger.info({ 
