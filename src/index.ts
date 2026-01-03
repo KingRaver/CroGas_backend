@@ -7,6 +7,7 @@ import x402Router from './routes/x402.js';
 import { logger } from './utils/logger.js';
 import { validateFaucet, validateX402 } from './middleware/validation.js';
 import { createFaucetLimiter } from './middleware/rateLimit.js';
+import metaRouter from './routes/meta.js';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
 // Rate limited + validated routes
 app.use('/faucet', createFaucetLimiter(), validateFaucet, faucetRouter);
 app.use('/x402', validateX402, x402Router); // x402 has no rate limit (per-tx)
+app.use('/meta', metaRouter);
 
 // 404 handler
 app.use('*', (req, res) => {
