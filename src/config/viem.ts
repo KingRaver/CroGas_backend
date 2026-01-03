@@ -48,6 +48,16 @@ export const USDC_ADDRESS = '0xF94b01ec5Bdc9F77cB77d4Cb1d5036D0b3f79C92' as cons
 
 export const USDC_ABI = [
   {
+    name: 'transfer',
+    type: 'function',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'to', type: 'address' },
+      { name: 'amount', type: 'uint256' }
+    ],
+    outputs: [{ type: 'bool' }]
+  },
+  {
     name: 'transferWithAuthorization',
     type: 'function',
     inputs: [
@@ -65,6 +75,7 @@ export const USDC_ABI = [
   {
     name: 'balanceOf',
     type: 'function',
+    stateMutability: 'view',
     inputs: [{ name: 'account', type: 'address' }],
     outputs: [{ type: 'uint256' }]
   }
