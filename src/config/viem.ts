@@ -1,4 +1,4 @@
-import { createPublicClient, http, createWalletClient } from 'viem';
+import { createPublicClient, http, createWalletClient, getAddress } from 'viem';
 import { cronosTestnet } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import CryptoJS from 'crypto-js';
@@ -44,7 +44,7 @@ export const walletClient = createWalletClient({
   account: relayerAccount,
 });
 
-export const USDC_ADDRESS = '0xF94b01ec5Bdc9F77cB77d4Cb1d5036D0b3f79C92' as const;
+export const USDC_ADDRESS = getAddress('0xF94b01ec5Bdc9F77cB77d4Cb1d5036D0b3f79C92');
 
 export const USDC_ABI = [
   {
