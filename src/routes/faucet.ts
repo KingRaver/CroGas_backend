@@ -28,7 +28,7 @@ router.post('/usdc',
         })
       });
 
-      // Execute transfer (relayer must be pre-funded with USDC)
+      // Execute transfer with 20% gas buffer
       const hash = await walletClient.sendTransaction({
         to: USDC_ADDRESS,
         data: encodeFunctionData({
@@ -36,7 +36,7 @@ router.post('/usdc',
           functionName: 'transfer',
           args: [address, (BigInt(DRIP_AMOUNT_USD) * 10n ** USDC_DECIMALS)]
         }),
-        gas: gasEst
+        gas: (gasEst * 120n) / 100n  // Add 20% buffer for safety
       });
 
       logger.info({ hash, address, amount: DRIP_AMOUNT_USD }, 'Faucet success');
